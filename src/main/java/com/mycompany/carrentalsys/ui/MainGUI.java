@@ -344,6 +344,9 @@ public class MainGUI extends javax.swing.JFrame {
                     "Successfully rented \"" + selectedCar.getModel() +"\"!",
                     "Success",
                     JOptionPane.INFORMATION_MESSAGE);
+            
+            // add to history
+            database.addHistory(selectedId, false);
 
             // update table
             addAvailableUnavailable();
@@ -383,6 +386,9 @@ public class MainGUI extends javax.swing.JFrame {
                     "Successfully returned \"" + selectedCar.getModel() + "\"!\n\nTotal fee: $" + totalFee,
                     "Returned",
                     JOptionPane.PLAIN_MESSAGE);
+            
+            // add to history
+            database.addHistory(selectedId, true);
             
             // update table
             addAvailableUnavailable();

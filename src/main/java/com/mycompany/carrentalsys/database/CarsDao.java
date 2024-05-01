@@ -28,8 +28,19 @@ public class CarsDao {
         this.pass = pass;
     }
     
+    public void addHistory(int carId, boolean rentReturn) throws SQLException {
+        try (Connection conn = createConnection();
+                Statement statement = conn.createStatement()){
+            String sql = 
+                    "INSERT INTO history_tbl (car_id, rent_return, transaction_date) " +
+                    "VALUES " +
+                    "(" + carId + ", " + rentReturn + ", CURDATE())";
+            statement.execute(sql);
+        }
+    }
+    
     public void setAvailability(int id, boolean availability) throws SQLException {
-        try ( Connection conn = createConnection();
+        try (Connection conn = createConnection();
                 Statement statement = conn.createStatement()){
             String sql = "UPDATE car_tbl SET availability = " + (availability ? "true" : "false") + " WHERE id = " + id;
             statement.execute(sql);
@@ -37,7 +48,7 @@ public class CarsDao {
     }
     
     public Car getCar(int idParam) throws SQLException {
-        try ( Connection conn = createConnection();
+        try (Connection conn = createConnection();
                 ResultSet results = conn.prepareStatement("SELECT * FROM car_tbl WHERE id = " + idParam).executeQuery()){
             results.next();
 
@@ -52,31 +63,33 @@ public class CarsDao {
     }
     
     public void updateCar(Car car) throws SQLException {
-        try ( Connection conn = createConnection();
+        try (Connection conn = createConnection();
                 Statement statement = conn.createStatement()){
-            String sql = "UPDATE car_tbl "
-                    + "SET "
-                    + "model = '" + car.getModel() + "', "
-                    + "year_manufactured = " + car.getYear() + ", "
-                    + "availability = " + (car.isAvailable() ? "true" : "false") + ", "
-                    + "fee = " + car.getRentalFee() + " "
-                    + "WHERE id = " + car.getId();
+            String sql = 
+                    "UPDATE car_tbl " +
+                    "SET " +
+                    "model = '" + car.getModel() + "', " +
+                    "year_manufactured = " + car.getYear() + ", " +
+                    "availability = " + (car.isAvailable() ? "true" : "false") + ", " +
+                    "fee = " + car.getRentalFee() + " " +
+                    "WHERE id = " + car.getId();
             statement.execute(sql);
         }
     }
     
     public void addCar(Car car) throws SQLException {
-        try ( Connection conn = createConnection();
+        try (Connection conn = createConnection();
                 Statement statement = conn.createStatement()){
-            String sql = "INSERT INTO car_tbl (model, year_manufactured, availability, fee) "
-                    + "VALUES "
-                    + "('" + car.getModel() + "', " + car.getYear() + ", " + car.isAvailable() + ", " + car.getRentalFee() + ")";
+            String sql = 
+                    "INSERT INTO car_tbl (model, year_manufactured, availability, fee) " +
+                    "VALUES " +
+                    "('" + car.getModel() + "', " + car.getYear() + ", " + car.isAvailable() + ", " + car.getRentalFee() + ")";
             statement.execute(sql);
         }
     }
     
     public void deleteCar(int id) throws SQLException {
-        try ( Connection conn = createConnection();
+        try (Connection conn = createConnection();
                 Statement statement = conn.createStatement()){
             String sql = "DELETE FROM car_tbl WHERE id = " + id;
             statement.execute(sql);
@@ -85,7 +98,7 @@ public class CarsDao {
     
     public List<Car> getAvailables() {
         List<Car> car_tbl = new ArrayList<>();
-        try ( Connection conn = createConnection();
+        try (Connection conn = createConnection();
                 ResultSet results = conn.prepareStatement(
                         "SELECT * FROM car_tbl " +
                         "WHERE availability = true"
@@ -107,7 +120,7 @@ public class CarsDao {
     
     public List<Car> getUnavailables() {
         List<Car> car_tbl = new ArrayList<>();
-        try ( Connection conn = createConnection();
+        try (Connection conn = createConnection();
                 ResultSet results = conn.prepareStatement(
                         "SELECT * FROM car_tbl " +
                         "WHERE availability = false"
