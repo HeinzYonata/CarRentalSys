@@ -32,7 +32,7 @@ public class Helpers {
     
     public static RowFilter generateSearchFilter(String search) {
         return new RowFilter() {
-            private String searchTxt = search;
+            private String searchTxt = search.toLowerCase();
             
             @Override
             public boolean include(RowFilter.Entry entry) {

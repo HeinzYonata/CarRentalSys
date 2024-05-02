@@ -9,13 +9,17 @@ import com.mycompany.carrentalsys.database.CarsDao;
 import com.mycompany.carrentalsys.domain.Car;
 import com.mycompany.carrentalsys.ui.About.DialogAbout;
 import com.mycompany.carrentalsys.ui.AddEntry.DialogAddEntry;
+import com.mycompany.carrentalsys.ui.History.DialogHistory;
 import com.mycompany.carrentalsys.ui.UpdateEntry.DialogUpdateEntry;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -60,6 +64,12 @@ public class MainGUI extends javax.swing.JFrame {
         // create row sorter
         this.tableRowSorter = new TableRowSorter(this.carTable.getModel());
         this.carTable.setRowSorter(this.tableRowSorter);
+        
+        //sort initially
+        ArrayList<RowSorter.SortKey> list = new ArrayList<>();
+        list.add( new RowSorter.SortKey(1, SortOrder.ASCENDING) );
+        this.tableRowSorter.setSortKeys(list);
+        this.tableRowSorter.sort();
         
         // set focus to jframe at start
         this.getContentPane().requestFocusInWindow();
@@ -122,7 +132,6 @@ public class MainGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
         header = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         fieldSearch = new javax.swing.JTextField();
@@ -141,17 +150,16 @@ public class MainGUI extends javax.swing.JFrame {
         editModeMenu = new javax.swing.JMenu();
         menuUpdate = new javax.swing.JMenuItem();
         menuAdd = new javax.swing.JMenuItem();
+        menuHistory = new javax.swing.JMenu();
         editModeMenu1 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(800, 450));
 
-        jPanel1.setLayout(new java.awt.BorderLayout(0, 10));
-
         header.setMaximumSize(new java.awt.Dimension(32767, 50));
-        header.setPreferredSize(new java.awt.Dimension(800, 50));
+        header.setPreferredSize(new java.awt.Dimension(800, 70));
 
-        jLabel1.setFont(new java.awt.Font("Corbel", 0, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Corbel", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("CAR RENTAL MANAGER");
 
@@ -173,7 +181,7 @@ public class MainGUI extends javax.swing.JFrame {
             .addGroup(headerLayout.createSequentialGroup()
                 .addGap(42, 42, 42)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 332, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 272, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fieldSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -182,7 +190,7 @@ public class MainGUI extends javax.swing.JFrame {
         headerLayout.setVerticalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerLayout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
+                .addContainerGap(34, Short.MAX_VALUE)
                 .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(fieldSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -190,7 +198,9 @@ public class MainGUI extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel1.add(header, java.awt.BorderLayout.PAGE_START);
+        getContentPane().add(header, java.awt.BorderLayout.PAGE_START);
+
+        jScrollPane1.setMinimumSize(new java.awt.Dimension(800, 400));
 
         carTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -229,13 +239,10 @@ public class MainGUI extends javax.swing.JFrame {
             carTable.getColumnModel().getColumn(4).setResizable(false);
         }
 
-        jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
-
-        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
+        getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         footer.setMaximumSize(new java.awt.Dimension(2147483647, 40));
-        footer.setMinimumSize(new java.awt.Dimension(188, 40));
-        footer.setPreferredSize(new java.awt.Dimension(100, 40));
+        footer.setPreferredSize(new java.awt.Dimension(10, 60));
         footer.setLayout(new java.awt.BorderLayout());
 
         filterGroup.setMinimumSize(new java.awt.Dimension(300, 0));
@@ -265,6 +272,9 @@ public class MainGUI extends javax.swing.JFrame {
         buttonGroup.setPreferredSize(new java.awt.Dimension(300, 428));
 
         rentButton.setText("Rent");
+        rentButton.setMaximumSize(new java.awt.Dimension(72, 27));
+        rentButton.setMinimumSize(new java.awt.Dimension(72, 27));
+        rentButton.setPreferredSize(new java.awt.Dimension(72, 27));
         rentButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rentButtonActionPerformed(evt);
@@ -273,6 +283,9 @@ public class MainGUI extends javax.swing.JFrame {
         buttonGroup.add(rentButton);
 
         returnButton.setText("Return");
+        returnButton.setMaximumSize(new java.awt.Dimension(72, 27));
+        returnButton.setMinimumSize(new java.awt.Dimension(72, 27));
+        returnButton.setPreferredSize(new java.awt.Dimension(72, 27));
         returnButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 returnButtonActionPerformed(evt);
@@ -281,6 +294,9 @@ public class MainGUI extends javax.swing.JFrame {
         buttonGroup.add(returnButton);
 
         exitButton.setText("Exit");
+        exitButton.setMaximumSize(new java.awt.Dimension(72, 27));
+        exitButton.setMinimumSize(new java.awt.Dimension(72, 27));
+        exitButton.setPreferredSize(new java.awt.Dimension(72, 27));
         exitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 exitButtonActionPerformed(evt);
@@ -316,6 +332,14 @@ public class MainGUI extends javax.swing.JFrame {
         editModeMenu.add(menuAdd);
 
         jMenuBar1.add(editModeMenu);
+
+        menuHistory.setText("History");
+        menuHistory.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuHistoryMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(menuHistory);
 
         editModeMenu1.setText("About");
         editModeMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -429,6 +453,10 @@ public class MainGUI extends javax.swing.JFrame {
         new DialogAbout(this);
     }//GEN-LAST:event_editModeMenu1MouseClicked
 
+    private void menuHistoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuHistoryMouseClicked
+        new DialogHistory(this, database); 
+    }//GEN-LAST:event_menuHistoryMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -458,9 +486,9 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenuItem menuAdd;
+    private javax.swing.JMenu menuHistory;
     private javax.swing.JMenuItem menuUpdate;
     private javax.swing.JButton rentButton;
     private javax.swing.JButton returnButton;

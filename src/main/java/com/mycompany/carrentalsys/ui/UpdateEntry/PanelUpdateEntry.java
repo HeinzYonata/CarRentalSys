@@ -8,7 +8,10 @@ import com.mycompany.carrentalsys.database.CarsDao;
 import com.mycompany.carrentalsys.domain.Car;
 import com.mycompany.carrentalsys.ui.Helpers;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -54,6 +57,12 @@ public class PanelUpdateEntry extends javax.swing.JPanel {
         // create row sorter
         this.tableRowSorter = new TableRowSorter(this.carTable.getModel());
         this.carTable.setRowSorter(this.tableRowSorter);
+        
+        //sort initially
+        ArrayList<RowSorter.SortKey> list = new ArrayList<>();
+        list.add( new RowSorter.SortKey(1, SortOrder.ASCENDING) );
+        this.tableRowSorter.setSortKeys(list);
+        this.tableRowSorter.sort();
     }
     
     private void setFormNothingSelected() {
@@ -137,7 +146,8 @@ public class PanelUpdateEntry extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         carTable = new javax.swing.JTable();
-        rightSide = new javax.swing.JPanel();
+        right = new javax.swing.JPanel();
+        rightCenter = new javax.swing.JPanel();
         fieldsGroup = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtFieldModel = new javax.swing.JTextField();
@@ -149,15 +159,16 @@ public class PanelUpdateEntry extends javax.swing.JPanel {
         cmbStatus = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         fieldSearch = new javax.swing.JTextField();
+        btnsGroup = new javax.swing.JPanel();
+        btnEdit = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
         chckBoxes = new javax.swing.JPanel();
         chckBoxAvailable = new javax.swing.JCheckBox();
         chckBoxUnavailable = new javax.swing.JCheckBox();
-        btnsGroup = new javax.swing.JPanel();
-        btnSave = new javax.swing.JButton();
-        btnDelete = new javax.swing.JButton();
-        btnEdit = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
 
-        setPreferredSize(new java.awt.Dimension(900, 450));
+        setPreferredSize(new java.awt.Dimension(800, 500));
         setLayout(new java.awt.BorderLayout());
 
         carTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -197,9 +208,12 @@ public class PanelUpdateEntry extends javax.swing.JPanel {
 
         add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        rightSide.setMaximumSize(new java.awt.Dimension(320, 32767));
-        rightSide.setMinimumSize(new java.awt.Dimension(320, 0));
-        rightSide.setPreferredSize(new java.awt.Dimension(320, 400));
+        right.setMaximumSize(new java.awt.Dimension(320, 400));
+        right.setPreferredSize(new java.awt.Dimension(320, 400));
+        right.setLayout(new java.awt.BorderLayout());
+
+        rightCenter.setMinimumSize(new java.awt.Dimension(320, 400));
+        rightCenter.setPreferredSize(new java.awt.Dimension(320, 400));
 
         jLabel1.setText("Model:");
 
@@ -279,9 +293,35 @@ public class PanelUpdateEntry extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        chckBoxes.setMaximumSize(new java.awt.Dimension(32767, 80));
-        chckBoxes.setMinimumSize(new java.awt.Dimension(100, 80));
-        chckBoxes.setPreferredSize(new java.awt.Dimension(100, 80));
+        btnsGroup.setMaximumSize(new java.awt.Dimension(320, 178));
+        btnsGroup.setPreferredSize(new java.awt.Dimension(320, 178));
+
+        btnEdit.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnEdit.setText("Edit");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
+        btnsGroup.add(btnEdit);
+
+        btnSave.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnSave.setText("Save");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+        btnsGroup.add(btnSave);
+
+        btnDelete.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+        btnsGroup.add(btnDelete);
 
         chckBoxAvailable.setSelected(true);
         chckBoxAvailable.setText("Available");
@@ -301,82 +341,40 @@ public class PanelUpdateEntry extends javax.swing.JPanel {
         });
         chckBoxes.add(chckBoxUnavailable);
 
-        btnSave.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnSave.setText("Save");
-        btnSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveActionPerformed(evt);
-            }
-        });
+        jLabel6.setFont(new java.awt.Font("Corbel", 0, 24)); // NOI18N
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("EDIT RECORD");
 
-        btnDelete.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnDelete.setText("Delete");
-        btnDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteActionPerformed(evt);
-            }
-        });
-
-        btnEdit.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnEdit.setText("Edit");
-        btnEdit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout btnsGroupLayout = new javax.swing.GroupLayout(btnsGroup);
-        btnsGroup.setLayout(btnsGroupLayout);
-        btnsGroupLayout.setHorizontalGroup(
-            btnsGroupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnsGroupLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnEdit)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSave)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnDelete)
-                .addContainerGap())
-        );
-        btnsGroupLayout.setVerticalGroup(
-            btnsGroupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnsGroupLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(btnsGroupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnDelete)
-                    .addComponent(btnSave)
-                    .addComponent(btnEdit))
-                .addContainerGap())
-        );
-
-        javax.swing.GroupLayout rightSideLayout = new javax.swing.GroupLayout(rightSide);
-        rightSide.setLayout(rightSideLayout);
-        rightSideLayout.setHorizontalGroup(
-            rightSideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rightSideLayout.createSequentialGroup()
+        javax.swing.GroupLayout rightCenterLayout = new javax.swing.GroupLayout(rightCenter);
+        rightCenter.setLayout(rightCenterLayout);
+        rightCenterLayout.setHorizontalGroup(
+            rightCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rightCenterLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(chckBoxes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(rightCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fieldsGroup, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnsGroup, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
+                    .addComponent(chckBoxes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rightSideLayout.createSequentialGroup()
-                .addContainerGap(41, Short.MAX_VALUE)
-                .addGroup(rightSideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(fieldsGroup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnsGroup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39))
         );
-        rightSideLayout.setVerticalGroup(
-            rightSideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rightSideLayout.createSequentialGroup()
-                .addGap(45, 45, 45)
+        rightCenterLayout.setVerticalGroup(
+            rightCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rightCenterLayout.createSequentialGroup()
+                .addGap(58, 58, 58)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(fieldsGroup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnsGroup, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnsGroup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(chckBoxes, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(chckBoxes, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35))
         );
 
-        add(rightSide, java.awt.BorderLayout.LINE_END);
+        right.add(rightCenter, java.awt.BorderLayout.LINE_END);
+
+        add(right, java.awt.BorderLayout.EAST);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
@@ -435,7 +433,7 @@ public class PanelUpdateEntry extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        int choice = JOptionPane.showConfirmDialog(this, "Are you sure?", "Confirm deletion", JOptionPane.YES_NO_OPTION);
+        int choice = JOptionPane.showConfirmDialog(this, "This will also delete the associated history.\nAre you sure?", "WARNING!", JOptionPane.YES_NO_OPTION);
         
         if (choice == 1) {
             return;
@@ -496,8 +494,10 @@ public class PanelUpdateEntry extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JPanel rightSide;
+    private javax.swing.JPanel right;
+    private javax.swing.JPanel rightCenter;
     private javax.swing.JTextField txtFieldFee;
     private javax.swing.JTextField txtFieldModel;
     private javax.swing.JTextField txtFieldYear;

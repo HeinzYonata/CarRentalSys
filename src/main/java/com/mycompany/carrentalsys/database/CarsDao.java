@@ -32,11 +32,67 @@ public class CarsDao {
         try (Connection conn = createConnection();
                 Statement statement = conn.createStatement()){
             String sql = 
-                    "INSERT INTO history_tbl (car_id, rent_return, transaction_date) " +
+                    "INSERT INTO history_tbl (car_id, rent_return, transaction_dateTime) " +
                     "VALUES " +
-                    "(" + carId + ", " + rentReturn + ", CURDATE())";
+                    "(" + carId + ", " + rentReturn + ", NOW())";
             statement.execute(sql);
         }
+    }
+    
+    public void clearHistory() throws SQLException {
+        try (Connection conn = createConnection();
+                Statement statement = conn.createStatement()){
+            String sql = "DELETE FROM history_tbl";
+            statement.execute(sql);
+        }
+    }
+    
+    public List<String[]> getRentHistory() {
+        List<String[]> historyRows = new ArrayList<>();
+        try (Connection conn = createConnection();
+                ResultSet results = conn.prepareStatement(
+                        "SELECT car_tbl.id, car_tbl.model, history_tbl.rent_return, history_tbl.transaction_dateTime " +
+                        "FROM history_tbl " +
+                        "JOIN car_tbl ON car_tbl.id = history_tbl.car_id " +
+                        "WHERE rent_return = false"
+                ).executeQuery()){
+            while (results.next()) {
+                String[] historyRow = new String[4];
+                historyRow[0] = results.getString("id");
+                historyRow[1] = results.getString("model");
+                historyRow[2] = results.getString("rent_return");
+                historyRow[3] = results.getString("transaction_dateTime");
+                historyRows.add(historyRow);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        
+        return historyRows;
+    }
+    
+    public List<String[]> getReturnHistory() {
+        List<String[]> historyRows = new ArrayList<>();
+        try (Connection conn = createConnection();
+                ResultSet results = conn.prepareStatement(
+                        "SELECT car_tbl.id, car_tbl.model, history_tbl.rent_return, history_tbl.transaction_dateTime " +
+                        "FROM history_tbl " +
+                        "JOIN car_tbl ON car_tbl.id = history_tbl.car_id " +
+                        "WHERE rent_return = true"
+                ).executeQuery()){
+            while (results.next()) {
+                String[] historyRow = new String[4];
+                historyRow[0] = results.getString("id");
+                historyRow[1] = results.getString("model");
+                historyRow[2] = results.getString("rent_return");
+                historyRow[3] = results.getString("transaction_dateTime");
+                historyRows.add(historyRow);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        
+        return historyRows;
     }
     
     public void setAvailability(int id, boolean availability) throws SQLException {
