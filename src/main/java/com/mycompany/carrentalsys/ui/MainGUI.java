@@ -315,6 +315,7 @@ public class MainGUI extends javax.swing.JFrame {
             }
         });
 
+        menuUpdate.setIcon(new javax.swing.ImageIcon("C:\\Users\\heinz\\Documents\\NetBeansProjects\\CarRentalSys\\src\\main\\resources\\images\\wrench.png")); // NOI18N
         menuUpdate.setText("Edit cars");
         menuUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -323,6 +324,7 @@ public class MainGUI extends javax.swing.JFrame {
         });
         editModeMenu.add(menuUpdate);
 
+        menuAdd.setIcon(new javax.swing.ImageIcon("C:\\Users\\heinz\\Documents\\NetBeansProjects\\CarRentalSys\\src\\main\\resources\\images\\addCar.png")); // NOI18N
         menuAdd.setText("Add cars");
         menuAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
