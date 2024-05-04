@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.carrentalsys.ui.History;
+package com.mycompany.carrentalsys.ui.updateEntry;
 
 import com.mycompany.carrentalsys.database.CarsDao;
 import java.awt.Dimension;
@@ -12,13 +12,13 @@ import javax.swing.JFrame;
  *
  * @author heinz
  */
-public class DialogHistory extends javax.swing.JDialog {
+public class DialogUpdateEntry extends javax.swing.JDialog {
     
-    public DialogHistory(JFrame parent, CarsDao db) {
+    public DialogUpdateEntry(JFrame parent, CarsDao db) {
         super(parent);
-        PanelHistory panel = new PanelHistory(db);
+        PanelUpdateEntry panel = new PanelUpdateEntry(parent, db);
         panel.setVisible(true);
-        this.setMinimumSize(new Dimension(600, 300));
+        this.setMinimumSize(new Dimension(700, 500));
         this.getContentPane().add(panel);
         
         // Pack the dialog to fit its content
@@ -27,7 +27,7 @@ public class DialogHistory extends javax.swing.JDialog {
         // Set location relative to parent
         this.setLocationRelativeTo(parent);
         
-        this.setTitle("History");
+        this.setTitle("Editor");
         this.setModal(true);
         this.setVisible(true);
     }

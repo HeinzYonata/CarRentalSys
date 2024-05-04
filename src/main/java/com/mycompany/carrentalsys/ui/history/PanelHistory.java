@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package com.mycompany.carrentalsys.ui.History;
+package com.mycompany.carrentalsys.ui.history;
 
 import com.mycompany.carrentalsys.database.CarsDao;
 import com.mycompany.carrentalsys.ui.Helpers;

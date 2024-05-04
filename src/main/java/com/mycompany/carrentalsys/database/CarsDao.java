@@ -47,6 +47,14 @@ public class CarsDao {
         }
     }
     
+    public int getCarsCount() throws SQLException {
+        try (Connection conn = createConnection();
+                ResultSet results = conn.prepareStatement("SELECT COUNT(*) AS numberOfCars FROM car_tbl").executeQuery()){
+            results.next();
+            return results.getInt("numberOfCars");
+        }
+    }
+    
     public List<String[]> getRentHistory() {
         List<String[]> historyRows = new ArrayList<>();
         try (Connection conn = createConnection();

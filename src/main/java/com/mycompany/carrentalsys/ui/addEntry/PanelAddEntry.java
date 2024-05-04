@@ -2,12 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package com.mycompany.carrentalsys.ui.AddEntry;
+package com.mycompany.carrentalsys.ui.addEntry;
 
 import com.mycompany.carrentalsys.database.CarsDao;
 import com.mycompany.carrentalsys.domain.Car;
 import com.mycompany.carrentalsys.ui.MainGUI;
 import java.sql.SQLException;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,12 +19,11 @@ public class PanelAddEntry extends javax.swing.JPanel {
 
     private CarsDao database;
     private MainGUI mainGUI;
-    /**
-     * Creates new form AddEntryPane
-     */
-    public PanelAddEntry(CarsDao db, MainGUI mainGUI) {
+    
+    public PanelAddEntry(JFrame parent, CarsDao db) {
         this.database = db;
-        this.mainGUI = mainGUI;
+        this.mainGUI = (MainGUI)parent;
+        
         initComponents();
         cmbStatus.addItem("Available");
         cmbStatus.addItem("Unavailable");
@@ -124,12 +124,12 @@ public class PanelAddEntry extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(51, 51, 51)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(jLabel6)))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(69, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel6)
+                .addGap(95, 95, 95))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

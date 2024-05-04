@@ -7,10 +7,10 @@ package com.mycompany.carrentalsys.ui;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import com.mycompany.carrentalsys.database.CarsDao;
 import com.mycompany.carrentalsys.domain.Car;
-import com.mycompany.carrentalsys.ui.About.DialogAbout;
-import com.mycompany.carrentalsys.ui.AddEntry.DialogAddEntry;
-import com.mycompany.carrentalsys.ui.History.DialogHistory;
-import com.mycompany.carrentalsys.ui.UpdateEntry.DialogUpdateEntry;
+import com.mycompany.carrentalsys.ui.about.DialogAbout;
+import com.mycompany.carrentalsys.ui.addEntry.DialogAddEntry;
+import com.mycompany.carrentalsys.ui.history.DialogHistory;
+import com.mycompany.carrentalsys.ui.updateEntry.DialogUpdateEntry;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.net.URL;
@@ -96,6 +96,12 @@ public class MainGUI extends javax.swing.JFrame {
         if (this.chckBoxUnavailable.isSelected()) {
             Helpers.populateTable(this.database.getUnavailables(), this.carTable);
         }
+        
+        try {
+            this.labelCarsCount.setText("Total cars: " + this.database.getCarsCount());
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
     
     // turn on/off rent and return
@@ -149,6 +155,7 @@ public class MainGUI extends javax.swing.JFrame {
         rentButton = new javax.swing.JButton();
         returnButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
+        labelCarsCount = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         editModeMenu = new javax.swing.JMenu();
         menuUpdate = new javax.swing.JMenuItem();
@@ -269,10 +276,10 @@ public class MainGUI extends javax.swing.JFrame {
         });
         filterGroup.add(chckBoxUnavailable);
 
-        footer.add(filterGroup, java.awt.BorderLayout.LINE_END);
+        footer.add(filterGroup, java.awt.BorderLayout.EAST);
 
-        buttonGroup.setMinimumSize(new java.awt.Dimension(300, 32));
-        buttonGroup.setPreferredSize(new java.awt.Dimension(300, 428));
+        buttonGroup.setMinimumSize(new java.awt.Dimension(350, 32));
+        buttonGroup.setPreferredSize(new java.awt.Dimension(350, 428));
 
         rentButton.setText("Rent");
         rentButton.setMaximumSize(new java.awt.Dimension(72, 27));
@@ -307,7 +314,12 @@ public class MainGUI extends javax.swing.JFrame {
         });
         buttonGroup.add(exitButton);
 
-        footer.add(buttonGroup, java.awt.BorderLayout.LINE_START);
+        labelCarsCount.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelCarsCount.setText("No. of cars: 02352");
+        labelCarsCount.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        buttonGroup.add(labelCarsCount);
+
+        footer.add(buttonGroup, java.awt.BorderLayout.WEST);
 
         getContentPane().add(footer, java.awt.BorderLayout.PAGE_END);
 
@@ -492,6 +504,7 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelCarsCount;
     private javax.swing.JMenuItem menuAdd;
     private javax.swing.JMenu menuHistory;
     private javax.swing.JMenuItem menuUpdate;

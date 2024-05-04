@@ -2,13 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package com.mycompany.carrentalsys.ui.UpdateEntry;
+package com.mycompany.carrentalsys.ui.updateEntry;
 
 import com.mycompany.carrentalsys.database.CarsDao;
 import com.mycompany.carrentalsys.domain.Car;
 import com.mycompany.carrentalsys.ui.Helpers;
+import com.mycompany.carrentalsys.ui.MainGUI;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
@@ -25,9 +27,12 @@ public class PanelUpdateEntry extends javax.swing.JPanel {
     private int selectedID;
     private CarsDao database;
     private TableRowSorter tableRowSorter;
+    private MainGUI mainGUI;
 
-    public PanelUpdateEntry(CarsDao db) {
+    public PanelUpdateEntry(JFrame parent, CarsDao db) {
         this.database = db;
+        this.mainGUI = (MainGUI)parent;
+        
         initComponents();
         setFormNothingSelected();
         
@@ -417,13 +422,15 @@ public class PanelUpdateEntry extends javax.swing.JPanel {
         Car car = new Car(selectedID, model, year, availability, fee);
         try {
             this.database.updateCar(car);
-            JOptionPane.showMessageDialog(this, "Successfully edited!");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         
         addAvailableUnavailable();
+        //update data in the main GUI
+        this.mainGUI.addAvailableUnavailable();
         setFormNothingSelected();
+        JOptionPane.showMessageDialog(this, "Successfully edited!");
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
@@ -450,12 +457,14 @@ public class PanelUpdateEntry extends javax.swing.JPanel {
             }
             
             addAvailableUnavailable();
-            JOptionPane.showMessageDialog(this, "Successfully deleted");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         
         setFormNothingSelected();
+        //update data in the main GUI
+        this.mainGUI.addAvailableUnavailable();
+        JOptionPane.showMessageDialog(this, "Successfully deleted!");
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void chckBoxAvailableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chckBoxAvailableActionPerformed
