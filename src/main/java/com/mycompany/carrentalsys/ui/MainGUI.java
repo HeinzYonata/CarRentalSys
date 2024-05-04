@@ -4,6 +4,7 @@
  */
 package com.mycompany.carrentalsys.ui;
 
+import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import com.mycompany.carrentalsys.database.CarsDao;
 import com.mycompany.carrentalsys.domain.Car;
@@ -240,13 +241,8 @@ public class MainGUI extends javax.swing.JFrame {
         carTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(carTable);
         if (carTable.getColumnModel().getColumnCount() > 0) {
-            carTable.getColumnModel().getColumn(0).setResizable(false);
             carTable.getColumnModel().getColumn(0).setPreferredWidth(10);
-            carTable.getColumnModel().getColumn(1).setResizable(false);
             carTable.getColumnModel().getColumn(1).setPreferredWidth(250);
-            carTable.getColumnModel().getColumn(2).setResizable(false);
-            carTable.getColumnModel().getColumn(3).setResizable(false);
-            carTable.getColumnModel().getColumn(4).setResizable(false);
         }
 
         getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -315,7 +311,7 @@ public class MainGUI extends javax.swing.JFrame {
         buttonGroup.add(exitButton);
 
         labelCarsCount.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelCarsCount.setText("No. of cars: 02352");
+        labelCarsCount.setText("Total cars: ");
         labelCarsCount.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         buttonGroup.add(labelCarsCount);
 
@@ -408,6 +404,9 @@ public class MainGUI extends javax.swing.JFrame {
         
         try {
             days = Integer.parseInt(input);
+            if (days < 0) {
+                throw new Exception();
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, 
                     "Please enter a valid number", 
@@ -418,21 +417,20 @@ public class MainGUI extends javax.swing.JFrame {
         
         try {
             Car selectedCar = database.getCar(selectedId);
+            double totalFee = (days == 0 ? selectedCar.getRentalFee() : days * selectedCar.getRentalFee());
+            // truncate to nearest hundredths
+            totalFee = Math.floor(totalFee * 100) / 100;
             
             database.setAvailability(selectedId, true);
-            double totalFee = days * selectedCar.getRentalFee();
-            totalFee = Math.floor(totalFee * 100) / 100;
+            // add to history
+            database.addHistory(selectedId, true);
+            // update table
+            addAvailableUnavailable();
             
             JOptionPane.showMessageDialog(this, 
                     "Successfully returned \"" + selectedCar.getModel() + "\"!\n\nTotal fee: $" + totalFee,
                     "Returned",
                     JOptionPane.PLAIN_MESSAGE);
-            
-            // add to history
-            database.addHistory(selectedId, true);
-            
-            // update table
-            addAvailableUnavailable();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } 
@@ -478,7 +476,7 @@ public class MainGUI extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void start(CarsDao database) {
-        
+        FlatLaf.registerCustomDefaultsSource("style");
         FlatMacLightLaf.setup();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {

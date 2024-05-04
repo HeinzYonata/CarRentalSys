@@ -5,7 +5,6 @@
 package com.mycompany.carrentalsys.ui.addEntry;
 
 import com.mycompany.carrentalsys.database.CarsDao;
-import com.mycompany.carrentalsys.ui.MainGUI;
 import javax.swing.JFrame;
 
 /**
