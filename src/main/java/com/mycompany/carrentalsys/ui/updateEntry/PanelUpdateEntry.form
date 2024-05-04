@@ -41,12 +41,12 @@
                 <Column editable="false" title="Model" type="java.lang.String"/>
                 <Column editable="false" title="Year" type="java.lang.Integer"/>
                 <Column editable="false" title="Status" type="java.lang.String"/>
-                <Column editable="false" title="Fee($)/Day" type="java.lang.Double"/>
+                <Column editable="false" title="Fee/Day" type="java.lang.Double"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
-                <Column maxWidth="-1" minWidth="30" prefWidth="30" resizable="true">
+                <Column maxWidth="-1" minWidth="35" prefWidth="35" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
@@ -165,7 +165,7 @@
                                   <Group type="103" groupAlignment="1" attributes="0">
                                       <Component id="jLabel1" alignment="1" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel2" alignment="1" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel4" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="labelFee" alignment="1" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel5" alignment="1" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -206,7 +206,7 @@
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="labelFee" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txtFieldFee" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
@@ -232,7 +232,7 @@
                     <Property name="text" type="java.lang.String" value="Year:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel4">
+                <Component class="javax.swing.JLabel" name="labelFee">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Fee/Day:"/>
                   </Properties>

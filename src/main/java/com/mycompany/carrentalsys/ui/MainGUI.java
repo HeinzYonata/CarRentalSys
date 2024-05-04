@@ -4,12 +4,14 @@
  */
 package com.mycompany.carrentalsys.ui;
 
+import com.mycompany.carrentalsys.ui.helpers.Helpers;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import com.mycompany.carrentalsys.database.CarsDao;
 import com.mycompany.carrentalsys.domain.Car;
 import com.mycompany.carrentalsys.ui.about.DialogAbout;
 import com.mycompany.carrentalsys.ui.addEntry.DialogAddEntry;
+import com.mycompany.carrentalsys.ui.helpers.CurrencyCellRenderer;
 import com.mycompany.carrentalsys.ui.history.DialogHistory;
 import com.mycompany.carrentalsys.ui.updateEntry.DialogUpdateEntry;
 import java.awt.Image;
@@ -68,7 +70,7 @@ public class MainGUI extends javax.swing.JFrame {
         
         //sort initially
         ArrayList<RowSorter.SortKey> list = new ArrayList<>();
-        list.add( new RowSorter.SortKey(0, SortOrder.ASCENDING) );
+        list.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
         this.tableRowSorter.setSortKeys(list);
         this.tableRowSorter.sort();
         
@@ -81,6 +83,9 @@ public class MainGUI extends javax.swing.JFrame {
         
         //center to screen
         setLocationRelativeTo(null);
+        
+        // format currency column
+        this.carTable.getColumnModel().getColumn(4).setCellRenderer(new CurrencyCellRenderer());
     }
     
     // add available and unavailable cars to the table depending on the checkboxes
@@ -218,7 +223,7 @@ public class MainGUI extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Model", "Year", "Status", "Fee($)/Day "
+                "ID", "Model", "Year", "Status", "Fee/Day "
             }
         ) {
             Class[] types = new Class [] {
@@ -375,22 +380,20 @@ public class MainGUI extends javax.swing.JFrame {
     private void rentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rentButtonActionPerformed
         try {
             Car selectedCar = database.getCar(selectedId);
-            
             database.setAvailability(selectedId, false);
+                        
+            // add to history
+            database.addHistory(selectedId, false);
+            // update table
+            addAvailableUnavailable();
+            
             JOptionPane.showMessageDialog(this, 
                     "Successfully rented \"" + selectedCar.getModel() +"\"!",
                     "Success",
                     JOptionPane.INFORMATION_MESSAGE);
-            
-            // add to history
-            database.addHistory(selectedId, false);
-
-            // update table
-            addAvailableUnavailable();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }//GEN-LAST:event_rentButtonActionPerformed
 
     private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnButtonActionPerformed
@@ -428,7 +431,9 @@ public class MainGUI extends javax.swing.JFrame {
             addAvailableUnavailable();
             
             JOptionPane.showMessageDialog(this, 
-                    "Successfully returned \"" + selectedCar.getModel() + "\"!\n\nTotal fee: $" + totalFee,
+                    "Successfully returned \"" + 
+                    selectedCar.getModel() + 
+                    "\"!\n\nTotal fee: " + Helpers.toPeso(totalFee),
                     "Returned",
                     JOptionPane.PLAIN_MESSAGE);
         } catch (SQLException e) {

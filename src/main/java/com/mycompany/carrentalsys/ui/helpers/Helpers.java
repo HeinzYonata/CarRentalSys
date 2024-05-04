@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.carrentalsys.ui;
+package com.mycompany.carrentalsys.ui.helpers;
 
 import com.mycompany.carrentalsys.domain.Car;
 import java.util.List;
@@ -39,5 +39,9 @@ public class Helpers {
                 return entry.getStringValue(1).toLowerCase().contains(searchTxt);
             }
         };
+    }
+    
+    public static String toPeso(double value) {
+        return (char)8369 + String.format("%,.2f", value);
     }
 }

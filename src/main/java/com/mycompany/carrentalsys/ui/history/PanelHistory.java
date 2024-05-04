@@ -5,7 +5,7 @@
 package com.mycompany.carrentalsys.ui.history;
 
 import com.mycompany.carrentalsys.database.CarsDao;
-import com.mycompany.carrentalsys.ui.Helpers;
+import com.mycompany.carrentalsys.ui.helpers.Helpers;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
