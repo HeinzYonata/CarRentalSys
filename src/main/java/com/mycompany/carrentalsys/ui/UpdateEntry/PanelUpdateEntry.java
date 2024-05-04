@@ -60,7 +60,7 @@ public class PanelUpdateEntry extends javax.swing.JPanel {
         
         //sort initially
         ArrayList<RowSorter.SortKey> list = new ArrayList<>();
-        list.add( new RowSorter.SortKey(1, SortOrder.ASCENDING) );
+        list.add( new RowSorter.SortKey(0, SortOrder.ASCENDING) );
         this.tableRowSorter.setSortKeys(list);
         this.tableRowSorter.sort();
     }

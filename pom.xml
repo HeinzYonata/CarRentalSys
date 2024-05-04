@@ -31,7 +31,7 @@
             <version>3.4.1</version>
         </dependency>
     </dependencies>
-    <name>CarRentalSys_Buildable</name>
+    <name>CarRentalSys</name>
     
     <build>
       <plugins>

@@ -18,8 +18,13 @@ public class DialogAddEntry extends javax.swing.JDialog {
         super(parent);
         PanelAddEntry panel = new PanelAddEntry(db, (MainGUI)parent);
         panel.setVisible(true);
-        this.setSize(panel.getPreferredSize());
         this.getContentPane().add(panel);
+        
+        // Pack the dialog to fit its content
+        this.pack();
+
+        // Set location relative to parent
+        this.setLocationRelativeTo(parent);
         
         this.setTitle("Add");
         this.setResizable(false);

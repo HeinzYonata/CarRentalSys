@@ -67,7 +67,7 @@ public class MainGUI extends javax.swing.JFrame {
         
         //sort initially
         ArrayList<RowSorter.SortKey> list = new ArrayList<>();
-        list.add( new RowSorter.SortKey(1, SortOrder.ASCENDING) );
+        list.add( new RowSorter.SortKey(0, SortOrder.ASCENDING) );
         this.tableRowSorter.setSortKeys(list);
         this.tableRowSorter.sort();
         
@@ -77,6 +77,9 @@ public class MainGUI extends javax.swing.JFrame {
         URL iconPath = this.getClass().getResource("/images/wheelIcon.png");
         Image icon = Toolkit.getDefaultToolkit().getImage(iconPath);  
         this.setIconImage(icon);  
+        
+        //center to screen
+        setLocationRelativeTo(null);
     }
     
     // add available and unavailable cars to the table depending on the checkboxes

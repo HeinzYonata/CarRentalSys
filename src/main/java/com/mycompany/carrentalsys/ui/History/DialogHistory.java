@@ -18,9 +18,14 @@ public class DialogHistory extends javax.swing.JDialog {
         super(parent);
         PanelHistory panel = new PanelHistory(db);
         panel.setVisible(true);
-        this.setSize(panel.getPreferredSize());
         this.setMinimumSize(new Dimension(600, 300));
         this.getContentPane().add(panel);
+        
+        // Pack the dialog to fit its content
+        this.pack();
+
+        // Set location relative to parent
+        this.setLocationRelativeTo(parent);
         
         this.setTitle("History");
         this.setModal(true);

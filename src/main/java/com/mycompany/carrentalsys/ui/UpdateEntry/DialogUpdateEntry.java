@@ -18,9 +18,14 @@ public class DialogUpdateEntry extends javax.swing.JDialog {
         super(parent);
         PanelUpdateEntry panel = new PanelUpdateEntry(db);
         panel.setVisible(true);
-        this.setSize(panel.getPreferredSize());
         this.setMinimumSize(new Dimension(700, 500));
         this.getContentPane().add(panel);
+        
+        // Pack the dialog to fit its content
+        this.pack();
+
+        // Set location relative to parent
+        this.setLocationRelativeTo(parent);
         
         this.setTitle("Editor");
         this.setModal(true);
