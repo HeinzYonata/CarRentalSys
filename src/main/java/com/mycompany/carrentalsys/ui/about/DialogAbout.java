@@ -27,5 +27,6 @@ public class DialogAbout extends javax.swing.JDialog {
         this.setResizable(false);
         this.setModal(true);
         this.setVisible(true);
+        
     }
 }

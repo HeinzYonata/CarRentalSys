@@ -40,7 +40,7 @@
                 <Column editable="false" title="ID" type="java.lang.Integer"/>
                 <Column editable="false" title="Model" type="java.lang.String"/>
                 <Column editable="false" title="Year" type="java.lang.Integer"/>
-                <Column editable="false" title="Status" type="java.lang.String"/>
+                <Column editable="false" title="Status" type="java.lang.Boolean"/>
                 <Column editable="false" title="Fee/Day" type="java.lang.Double"/>
               </Table>
             </Property>

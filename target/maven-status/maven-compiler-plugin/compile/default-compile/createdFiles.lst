@@ -1,3 +1,4 @@
+com\mycompany\carrentalsys\ui\helpers\StatusCellRenderer.class
 com\mycompany\carrentalsys\ui\helpers\CurrencyCellRenderer.class
 com\mycompany\carrentalsys\ui\AddEntry\DialogAddEntry.class
 com\mycompany\carrentalsys\ui\History\PanelHistory$5.class

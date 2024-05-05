@@ -20,8 +20,7 @@ public class Helpers {
         DefaultTableModel model = (DefaultTableModel)table.getModel();
         
         list.stream().forEach(car -> {
-            String status = car.isAvailable() ? "Available" : "Unavailable";
-            model.addRow(new Object[] {car.getId(), car.getModel(), car.getYear(), status, car.getRentalFee()});
+            model.addRow(new Object[] {car.getId(), car.getModel(), car.getYear(), car.isAvailable(), car.getRentalFee()});
         });
     }
     

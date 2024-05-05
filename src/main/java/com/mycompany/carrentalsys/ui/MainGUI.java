@@ -12,6 +12,7 @@ import com.mycompany.carrentalsys.domain.Car;
 import com.mycompany.carrentalsys.ui.about.DialogAbout;
 import com.mycompany.carrentalsys.ui.addEntry.DialogAddEntry;
 import com.mycompany.carrentalsys.ui.helpers.CurrencyCellRenderer;
+import com.mycompany.carrentalsys.ui.helpers.StatusCellRenderer;
 import com.mycompany.carrentalsys.ui.history.DialogHistory;
 import com.mycompany.carrentalsys.ui.updateEntry.DialogUpdateEntry;
 import java.awt.Image;
@@ -86,6 +87,10 @@ public class MainGUI extends javax.swing.JFrame {
         
         // format currency column
         this.carTable.getColumnModel().getColumn(4).setCellRenderer(new CurrencyCellRenderer());
+        
+        // format status column
+        this.carTable.getColumnModel().getColumn(3).setCellRenderer(new StatusCellRenderer());
+        
     }
     
     // add available and unavailable cars to the table depending on the checkboxes
@@ -227,7 +232,7 @@ public class MainGUI extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Double.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Boolean.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false

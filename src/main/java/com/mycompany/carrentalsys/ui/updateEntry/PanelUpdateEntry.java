@@ -9,6 +9,7 @@ import com.mycompany.carrentalsys.domain.Car;
 import com.mycompany.carrentalsys.ui.helpers.Helpers;
 import com.mycompany.carrentalsys.ui.MainGUI;
 import com.mycompany.carrentalsys.ui.helpers.CurrencyCellRenderer;
+import com.mycompany.carrentalsys.ui.helpers.StatusCellRenderer;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JFrame;
@@ -73,6 +74,9 @@ public class PanelUpdateEntry extends javax.swing.JPanel {
         
         // format currency column
         this.carTable.getColumnModel().getColumn(4).setCellRenderer(new CurrencyCellRenderer());
+        
+        // format status column
+        this.carTable.getColumnModel().getColumn(3).setCellRenderer(new StatusCellRenderer());
     }
     
     private void setFormNothingSelected() {
@@ -190,7 +194,7 @@ public class PanelUpdateEntry extends javax.swing.JPanel {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Double.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Boolean.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
