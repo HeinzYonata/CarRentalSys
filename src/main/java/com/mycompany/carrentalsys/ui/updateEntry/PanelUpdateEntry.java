@@ -6,6 +6,7 @@ package com.mycompany.carrentalsys.ui.updateEntry;
 
 import com.mycompany.carrentalsys.database.CarsDao;
 import com.mycompany.carrentalsys.domain.Car;
+import com.mycompany.carrentalsys.ui.helpers.IconFactory;
 import com.mycompany.carrentalsys.ui.helpers.Helpers;
 import com.mycompany.carrentalsys.ui.MainGUI;
 import com.mycompany.carrentalsys.ui.helpers.CurrencyCellRenderer;
@@ -36,7 +37,7 @@ public class PanelUpdateEntry extends javax.swing.JPanel {
         this.mainGUI = (MainGUI)parent;
         
         initComponents();
-        this.labelFee.setText("Fee/Day: " + (char)8369);
+        initVisuals();
         setFormNothingSelected();
         
         addAvailableUnavailable();
@@ -520,4 +521,11 @@ public class PanelUpdateEntry extends javax.swing.JPanel {
     private javax.swing.JTextField txtFieldModel;
     private javax.swing.JTextField txtFieldYear;
     // End of variables declaration//GEN-END:variables
+
+    private void initVisuals() {
+        this.btnDelete.setIcon(IconFactory.getBtnIconDelete());
+        this.btnEdit.setIcon(IconFactory.getBtnIconEdit());
+        this.btnSave.setIcon(IconFactory.getBtnIconSave());
+        this.labelFee.setText("Fee/Day: " + (char)8369);
+    }
 }

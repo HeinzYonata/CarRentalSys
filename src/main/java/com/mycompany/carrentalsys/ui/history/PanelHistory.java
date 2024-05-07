@@ -6,6 +6,7 @@ package com.mycompany.carrentalsys.ui.history;
 
 import com.mycompany.carrentalsys.database.CarsDao;
 import com.mycompany.carrentalsys.ui.helpers.Helpers;
+import com.mycompany.carrentalsys.ui.helpers.IconFactory;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,8 @@ public class PanelHistory extends javax.swing.JPanel {
     
     public PanelHistory(CarsDao db) {
         this.database = db;
-        initComponents();        
+        initComponents();   
+        this.btnClearHistory.setIcon(IconFactory.getBtnIconDelete());
         addRentReturn();
                 
         carTable.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
@@ -39,9 +41,9 @@ public class PanelHistory extends javax.swing.JPanel {
             int[] selectedRows = carTable.getSelectedRows();
             if (selectedRows.length == 1) {
                 selectedID = Integer.parseInt(carTable.getValueAt(selectedRows[0], 0).toString());
-                btnDelete.setEnabled(true);
+                btnClearHistory.setEnabled(true);
             } else if (selectedRows.length > 1) {
-                btnDelete.setEnabled(true);
+                btnClearHistory.setEnabled(true);
             } else {
             }
         });
@@ -59,7 +61,7 @@ public class PanelHistory extends javax.swing.JPanel {
     
     // initial enability of buttons
     private void initButtons() {
-        this.btnDelete.setEnabled(false);
+        this.btnClearHistory.setEnabled(false);
     }
 
     // add available and unavailable cars to the table depending on the checkboxes
@@ -103,7 +105,7 @@ public class PanelHistory extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         carTable = new javax.swing.JTable();
         bottom = new javax.swing.JPanel();
-        btnDelete = new javax.swing.JButton();
+        btnClearHistory = new javax.swing.JButton();
         chckBoxAvailable = new javax.swing.JCheckBox();
         chckBoxUnavailable = new javax.swing.JCheckBox();
 
@@ -133,13 +135,13 @@ public class PanelHistory extends javax.swing.JPanel {
         topLayout.setHorizontalGroup(
             topLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(topLayout.createSequentialGroup()
-                .addGap(34, 34, 34)
+                .addGap(40, 40, 40)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 249, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fieldSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44))
+                .addGap(40, 40, 40))
         );
         topLayout.setVerticalGroup(
             topLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,14 +202,14 @@ public class PanelHistory extends javax.swing.JPanel {
         bottom.setMinimumSize(new java.awt.Dimension(100, 60));
         bottom.setPreferredSize(new java.awt.Dimension(100, 60));
 
-        btnDelete.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnDelete.setText("Clear History");
-        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+        btnClearHistory.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnClearHistory.setText("Clear History");
+        btnClearHistory.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteActionPerformed(evt);
+                btnClearHistoryActionPerformed(evt);
             }
         });
-        bottom.add(btnDelete);
+        bottom.add(btnClearHistory);
 
         chckBoxAvailable.setSelected(true);
         chckBoxAvailable.setText("Rents");
@@ -230,7 +232,7 @@ public class PanelHistory extends javax.swing.JPanel {
         add(bottom, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+    private void btnClearHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearHistoryActionPerformed
         int choice = JOptionPane.showConfirmDialog(this, "This will clear all history.\nAre you sure?", "Confirm deletion", JOptionPane.YES_NO_OPTION);
      
         if (choice == 1) {
@@ -244,7 +246,7 @@ public class PanelHistory extends javax.swing.JPanel {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-    }//GEN-LAST:event_btnDeleteActionPerformed
+    }//GEN-LAST:event_btnClearHistoryActionPerformed
 
     private void chckBoxAvailableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chckBoxAvailableActionPerformed
         addRentReturn();
@@ -264,7 +266,7 @@ public class PanelHistory extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bottom;
-    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnClearHistory;
     private javax.swing.JTable carTable;
     private javax.swing.JCheckBox chckBoxAvailable;
     private javax.swing.JCheckBox chckBoxUnavailable;

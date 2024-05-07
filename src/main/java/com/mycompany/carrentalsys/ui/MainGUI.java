@@ -12,6 +12,7 @@ import com.mycompany.carrentalsys.domain.Car;
 import com.mycompany.carrentalsys.ui.about.DialogAbout;
 import com.mycompany.carrentalsys.ui.addEntry.DialogAddEntry;
 import com.mycompany.carrentalsys.ui.helpers.CurrencyCellRenderer;
+import com.mycompany.carrentalsys.ui.helpers.IconFactory;
 import com.mycompany.carrentalsys.ui.helpers.StatusCellRenderer;
 import com.mycompany.carrentalsys.ui.history.DialogHistory;
 import com.mycompany.carrentalsys.ui.updateEntry.DialogUpdateEntry;
@@ -24,6 +25,7 @@ import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -42,11 +44,12 @@ public class MainGUI extends javax.swing.JFrame {
     
     public MainGUI(CarsDao database) {
         initComponents();
+        initVisuals();
         this.database = database;
         
         selectedId = -1;
-        rentButton.setEnabled(false);
-        returnButton.setEnabled(false);
+        btnRent.setEnabled(false);
+        btnReturn.setEnabled(false);
         
         addAvailableUnavailable();
         
@@ -77,10 +80,6 @@ public class MainGUI extends javax.swing.JFrame {
         
         // set focus to jframe at start
         this.getContentPane().requestFocusInWindow();
-        
-        URL iconPath = this.getClass().getResource("/images/wheelIcon.png");
-        Image icon = Toolkit.getDefaultToolkit().getImage(iconPath);  
-        this.setIconImage(icon);  
         
         //center to screen
         setLocationRelativeTo(null);
@@ -118,28 +117,28 @@ public class MainGUI extends javax.swing.JFrame {
     // turn on/off rent and return
     private void updateButtonAccess() {
         if (selectedId == -1) {
-            rentButton.setEnabled(false);
-            returnButton.setEnabled(false);
+            btnRent.setEnabled(false);
+            btnReturn.setEnabled(false);
             return;
         }
         
         try {
             // turn on return button when car is not available, else off
             if (database.getCar(selectedId).isAvailable()) {
-                returnButton.setEnabled(false);
+                btnReturn.setEnabled(false);
             } else {
-                returnButton.setEnabled(true);
+                btnReturn.setEnabled(true);
             }
             
             // turn on rent button when car is available, else off
             if (!database.getCar(selectedId).isAvailable()) {
-                rentButton.setEnabled(false);
+                btnRent.setEnabled(false);
             } else {
-                rentButton.setEnabled(true);
+                btnRent.setEnabled(true);
             }
             
-        } catch (Exception error) {
-            System.out.println(error.getMessage());
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -154,25 +153,24 @@ public class MainGUI extends javax.swing.JFrame {
 
         header = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        fieldSearch = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        fieldSearch = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         carTable = new javax.swing.JTable();
         footer = new javax.swing.JPanel();
         filterGroup = new javax.swing.JPanel();
-        chckBoxAvailable = new javax.swing.JCheckBox();
         chckBoxUnavailable = new javax.swing.JCheckBox();
+        chckBoxAvailable = new javax.swing.JCheckBox();
         buttonGroup = new javax.swing.JPanel();
-        rentButton = new javax.swing.JButton();
-        returnButton = new javax.swing.JButton();
-        exitButton = new javax.swing.JButton();
+        btnRent = new javax.swing.JButton();
+        btnReturn = new javax.swing.JButton();
         labelCarsCount = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        editModeMenu = new javax.swing.JMenu();
-        menuUpdate = new javax.swing.JMenuItem();
-        menuAdd = new javax.swing.JMenuItem();
+        menuManage = new javax.swing.JMenu();
+        subMenuEdit = new javax.swing.JMenuItem();
+        subMenuAdd = new javax.swing.JMenuItem();
         menuHistory = new javax.swing.JMenu();
-        editModeMenu1 = new javax.swing.JMenu();
+        menuAbout = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(800, 450));
@@ -184,6 +182,10 @@ public class MainGUI extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("CAR RENTAL MANAGER");
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(55, 55, 55));
+        jLabel2.setText("Search:");
+
         fieldSearch.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         fieldSearch.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -191,32 +193,28 @@ public class MainGUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(55, 55, 55));
-        jLabel2.setText("Search:");
-
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
         header.setLayout(headerLayout);
         headerLayout.setHorizontalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerLayout.createSequentialGroup()
-                .addGap(42, 42, 42)
+                .addGap(40, 40, 40)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 272, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 255, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fieldSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56))
+                .addGap(40, 40, 40))
         );
         headerLayout.setVerticalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerLayout.createSequentialGroup()
-                .addContainerGap(34, Short.MAX_VALUE)
+                .addGap(28, 28, 28)
                 .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(fieldSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addContainerGap())
+                .addGap(16, 16, 16))
         );
 
         getContentPane().add(header, java.awt.BorderLayout.PAGE_START);
@@ -261,17 +259,7 @@ public class MainGUI extends javax.swing.JFrame {
         footer.setPreferredSize(new java.awt.Dimension(10, 60));
         footer.setLayout(new java.awt.BorderLayout());
 
-        filterGroup.setMinimumSize(new java.awt.Dimension(300, 0));
-        filterGroup.setPreferredSize(new java.awt.Dimension(300, 40));
-
-        chckBoxAvailable.setSelected(true);
-        chckBoxAvailable.setText("Available");
-        chckBoxAvailable.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chckBoxAvailableActionPerformed(evt);
-            }
-        });
-        filterGroup.add(chckBoxAvailable);
+        filterGroup.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEADING));
 
         chckBoxUnavailable.setSelected(true);
         chckBoxUnavailable.setText("Unavailable");
@@ -282,43 +270,36 @@ public class MainGUI extends javax.swing.JFrame {
         });
         filterGroup.add(chckBoxUnavailable);
 
+        chckBoxAvailable.setSelected(true);
+        chckBoxAvailable.setText("Available");
+        chckBoxAvailable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chckBoxAvailableActionPerformed(evt);
+            }
+        });
+        filterGroup.add(chckBoxAvailable);
+
         footer.add(filterGroup, java.awt.BorderLayout.EAST);
 
         buttonGroup.setMinimumSize(new java.awt.Dimension(350, 32));
         buttonGroup.setPreferredSize(new java.awt.Dimension(350, 428));
+        buttonGroup.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEADING));
 
-        rentButton.setText("Rent");
-        rentButton.setMaximumSize(new java.awt.Dimension(72, 27));
-        rentButton.setMinimumSize(new java.awt.Dimension(72, 27));
-        rentButton.setPreferredSize(new java.awt.Dimension(72, 27));
-        rentButton.addActionListener(new java.awt.event.ActionListener() {
+        btnRent.setText("Rent");
+        btnRent.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rentButtonActionPerformed(evt);
+                btnRentActionPerformed(evt);
             }
         });
-        buttonGroup.add(rentButton);
+        buttonGroup.add(btnRent);
 
-        returnButton.setText("Return");
-        returnButton.setMaximumSize(new java.awt.Dimension(72, 27));
-        returnButton.setMinimumSize(new java.awt.Dimension(72, 27));
-        returnButton.setPreferredSize(new java.awt.Dimension(72, 27));
-        returnButton.addActionListener(new java.awt.event.ActionListener() {
+        btnReturn.setText("Return");
+        btnReturn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                returnButtonActionPerformed(evt);
+                btnReturnActionPerformed(evt);
             }
         });
-        buttonGroup.add(returnButton);
-
-        exitButton.setText("Exit");
-        exitButton.setMaximumSize(new java.awt.Dimension(72, 27));
-        exitButton.setMinimumSize(new java.awt.Dimension(72, 27));
-        exitButton.setPreferredSize(new java.awt.Dimension(72, 27));
-        exitButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitButtonActionPerformed(evt);
-            }
-        });
-        buttonGroup.add(exitButton);
+        buttonGroup.add(btnReturn);
 
         labelCarsCount.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelCarsCount.setText("Total cars: ");
@@ -329,32 +310,30 @@ public class MainGUI extends javax.swing.JFrame {
 
         getContentPane().add(footer, java.awt.BorderLayout.PAGE_END);
 
-        editModeMenu.setText("Manage");
-        editModeMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+        menuManage.setText("Manage");
+        menuManage.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                editModeMenuMouseClicked(evt);
+                menuManageMouseClicked(evt);
             }
         });
 
-        menuUpdate.setIcon(new javax.swing.ImageIcon("C:\\Users\\heinz\\Documents\\NetBeansProjects\\CarRentalSys\\src\\main\\resources\\images\\wrench.png")); // NOI18N
-        menuUpdate.setText("Edit cars");
-        menuUpdate.addActionListener(new java.awt.event.ActionListener() {
+        subMenuEdit.setText("Edit cars");
+        subMenuEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuUpdateActionPerformed(evt);
+                subMenuEditActionPerformed(evt);
             }
         });
-        editModeMenu.add(menuUpdate);
+        menuManage.add(subMenuEdit);
 
-        menuAdd.setIcon(new javax.swing.ImageIcon("C:\\Users\\heinz\\Documents\\NetBeansProjects\\CarRentalSys\\src\\main\\resources\\images\\addCar.png")); // NOI18N
-        menuAdd.setText("Add cars");
-        menuAdd.addActionListener(new java.awt.event.ActionListener() {
+        subMenuAdd.setText("Add cars");
+        subMenuAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuAddActionPerformed(evt);
+                subMenuAddActionPerformed(evt);
             }
         });
-        editModeMenu.add(menuAdd);
+        menuManage.add(subMenuAdd);
 
-        jMenuBar1.add(editModeMenu);
+        jMenuBar1.add(menuManage);
 
         menuHistory.setText("History");
         menuHistory.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -364,25 +343,20 @@ public class MainGUI extends javax.swing.JFrame {
         });
         jMenuBar1.add(menuHistory);
 
-        editModeMenu1.setText("About");
-        editModeMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
+        menuAbout.setText("About");
+        menuAbout.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                editModeMenu1MouseClicked(evt);
+                menuAboutMouseClicked(evt);
             }
         });
-        jMenuBar1.add(editModeMenu1);
+        jMenuBar1.add(menuAbout);
 
         setJMenuBar(jMenuBar1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
-        // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_exitButtonActionPerformed
-
-    private void rentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rentButtonActionPerformed
+    private void btnRentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRentActionPerformed
         try {
             Car selectedCar = database.getCar(selectedId);
             database.setAvailability(selectedId, false);
@@ -396,17 +370,13 @@ public class MainGUI extends javax.swing.JFrame {
                     "Successfully rented \"" + selectedCar.getModel() +"\"!",
                     "Success",
                     JOptionPane.INFORMATION_MESSAGE);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
-    }//GEN-LAST:event_rentButtonActionPerformed
+    }//GEN-LAST:event_btnRentActionPerformed
 
-    private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnButtonActionPerformed
+    private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed
         String input = JOptionPane.showInputDialog(this, "Number of days the car was used:", "Returning car", JOptionPane.PLAIN_MESSAGE);
-        
-        if (input == null) {
-            return;
-        }
         
         double days;
         
@@ -444,22 +414,22 @@ public class MainGUI extends javax.swing.JFrame {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } 
-    }//GEN-LAST:event_returnButtonActionPerformed
+    }//GEN-LAST:event_btnReturnActionPerformed
 
-    private void editModeMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editModeMenuMouseClicked
+    private void menuManageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuManageMouseClicked
 
         
-    }//GEN-LAST:event_editModeMenuMouseClicked
+    }//GEN-LAST:event_menuManageMouseClicked
 
-    private void menuUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuUpdateActionPerformed
+    private void subMenuEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuEditActionPerformed
         new DialogUpdateEntry(this, database);
         addAvailableUnavailable();
-    }//GEN-LAST:event_menuUpdateActionPerformed
+    }//GEN-LAST:event_subMenuEditActionPerformed
 
-    private void menuAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAddActionPerformed
+    private void subMenuAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuAddActionPerformed
         new DialogAddEntry(this, database);
         addAvailableUnavailable();
-    }//GEN-LAST:event_menuAddActionPerformed
+    }//GEN-LAST:event_subMenuAddActionPerformed
 
     private void fieldSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldSearchKeyReleased
         String search = fieldSearch.getText();
@@ -474,17 +444,15 @@ public class MainGUI extends javax.swing.JFrame {
         addAvailableUnavailable();
     }//GEN-LAST:event_chckBoxUnavailableActionPerformed
 
-    private void editModeMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editModeMenu1MouseClicked
+    private void menuAboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAboutMouseClicked
         new DialogAbout(this);
-    }//GEN-LAST:event_editModeMenu1MouseClicked
+    }//GEN-LAST:event_menuAboutMouseClicked
 
     private void menuHistoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuHistoryMouseClicked
         new DialogHistory(this, database); 
     }//GEN-LAST:event_menuHistoryMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void start(CarsDao database) {
         FlatLaf.registerCustomDefaultsSource("style");
         FlatMacLightLaf.setup();
@@ -497,13 +465,12 @@ public class MainGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnRent;
+    private javax.swing.JButton btnReturn;
     private javax.swing.JPanel buttonGroup;
     private javax.swing.JTable carTable;
     private javax.swing.JCheckBox chckBoxAvailable;
     private javax.swing.JCheckBox chckBoxUnavailable;
-    private javax.swing.JMenu editModeMenu;
-    private javax.swing.JMenu editModeMenu1;
-    private javax.swing.JButton exitButton;
     private javax.swing.JTextField fieldSearch;
     private javax.swing.JPanel filterGroup;
     private javax.swing.JPanel footer;
@@ -513,10 +480,28 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelCarsCount;
-    private javax.swing.JMenuItem menuAdd;
+    private javax.swing.JMenu menuAbout;
     private javax.swing.JMenu menuHistory;
-    private javax.swing.JMenuItem menuUpdate;
-    private javax.swing.JButton rentButton;
-    private javax.swing.JButton returnButton;
+    private javax.swing.JMenu menuManage;
+    private javax.swing.JMenuItem subMenuAdd;
+    private javax.swing.JMenuItem subMenuEdit;
     // End of variables declaration//GEN-END:variables
+
+    private void initVisuals() {
+        URL iconPath = this.getClass().getResource("/images/wheelIcon.png");
+        Image icon = Toolkit.getDefaultToolkit().getImage(iconPath);  
+        this.setIconImage(icon);  
+        
+        this.btnRent.setIcon(IconFactory.getBtnIconRent());
+        this.btnReturn.setIcon(IconFactory.getBtnIconReturn());
+        
+        this.subMenuEdit.setIcon(IconFactory.getBtnIconEdit());
+        this.subMenuAdd.setIcon(IconFactory.getBtnIconAdd());
+        
+        this.menuManage.setIcon(IconFactory.getMenuIconManage());
+        this.menuHistory.setIcon(IconFactory.getMenuIconHistory());
+        this.menuAbout.setIcon(IconFactory.getMenuIconAbout());
+        
+        this.footer.setBorder(new EmptyBorder(5, 40, 5, 40));
+    }
 }

@@ -8,6 +8,7 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.mycompany.carrentalsys.database.CarsDao;
 import com.mycompany.carrentalsys.domain.Car;
 import com.mycompany.carrentalsys.ui.MainGUI;
+import com.mycompany.carrentalsys.ui.helpers.IconFactory;
 import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -26,6 +27,7 @@ public class PanelAddEntry extends javax.swing.JPanel {
         this.mainGUI = (MainGUI)parent;
         
         initComponents();
+        this.btnAdd.setIcon(IconFactory.getBtnIconAdd());
         cmbStatus.addItem("Available");
         cmbStatus.addItem("Unavailable");
         
