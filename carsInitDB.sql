@@ -11,6 +11,16 @@ CREATE TABLE car_tbl (
   PRIMARY KEY (id)
 );
 
+CREATE TABLE history_tbl (
+  car_id INT NOT NULL,
+  rent_return BOOLEAN,
+  transaction_dateTime DATETIME NOT NULL,
+  FOREIGN KEY (car_id) 
+		REFERENCES car_tbl(id)
+		ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
 INSERT INTO car_tbl (model, year_manufactured, availability, fee)
 VALUES
 	('Toyota Corolla' , 2024, true, 1888.55),  -- 32.99 USD * 57.25 PHP/USD
